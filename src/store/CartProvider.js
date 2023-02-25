@@ -33,13 +33,13 @@ const cartReducer= (state,action)=>{
   }
   if(action.type==='REMOVE'){
     const exisitingCartItemInex = state.items.findIndex(
-      (item)=> item.id ===action.item.id
+      (item)=> item.id ===action.id
     );
     const exisitingItem = state.items[exisitingCartItemInex]
     const updatedTotalAmount = state.totalAmount - exisitingItem.price;
     let updatedItems;
   if(exisitingItem.amount === 1){
-    updatedItems = state.items.filter(item => item.id !== action.item.id)
+    updatedItems = state.items.filter(item => item.id !== action.id)
   } else {
     const updatedItem = { ...exisitingItem, amount: exisitingItem.amount-1};
     updatedItems=[...state.items];
@@ -51,7 +51,7 @@ const cartReducer= (state,action)=>{
   };
 }
   
-  return defaultCartState
+  return defaultCartState;
 };
 
 const CartProvider = (props)=>{
@@ -66,7 +66,7 @@ const CartProvider = (props)=>{
     items:cartState.items,
     totalAmount:cartState.totalAmount,
     addItem: addItemToCartHandler,
-    removeItem:removeItemToCartHandler
+    removeItem:removeItemToCartHandler,
   }
   return(
     <CardContext.Provider value={cartContext}>
